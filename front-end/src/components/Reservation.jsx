@@ -8,9 +8,9 @@ import { useNavigate } from "react-router-dom";
 const Reservation = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
+  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState(0);
   const navigate = useNavigate();
 
@@ -18,22 +18,22 @@ const Reservation = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:4000/api/v1/reservation/send",
-        { firstName, lastName, email, phone, date, time },
+        "http://localhost:4000/api/v1/reservation/send", // Updated port
+        { firstName, lastName, date, time, email, phone },
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            withCredentials: true,
         }
       );
       toast.success(data.message);
       setFirstName("");
       setLastName("");
-      setPhone(0);
-      setEmail("");
       setTime("");
       setDate("");
+      setPhone("");
+      setEmail("");
       navigate("/success");
     } catch (error) {
       if (error.response && error.response.data) {
